@@ -17,8 +17,16 @@ import org.json.simple.parser.JSONParser;
 import java.util.ArrayList;
 
 public class Loklak {
+	/* These fields are for the Loklak object
 
-    private String baseUrl = "http://api.loklak.org/";
+	It also contains methods that can be used to access
+	the Loklak API services
+
+	*/
+
+    private String baseUrl = "";
+    private String susiUrl = "https://api.asksusi.com/susi/chat.json";
+
     private String name = "";
     private String followers = "";
     private String following = "";
@@ -36,13 +44,32 @@ public class Loklak {
 
     private final String USER_AGENT = "Mozilla/5.0";
 
-	public Loklak() {}
+	public Loklak() {
+		/* Sets default baseUrl
+		*/
+		
+		this.baseUrl = "http://api.loklak.org/";
+	}
 
 	public Loklak(String baseUrl) {
+		/* Sets user defined baseUrl
+		*/
+
 		this.baseUrl = baseUrl;
 	}
 
+	public String getBaseUrl() {
+		/* Returns baseUrl
+        */
+		
+		return this.baseUrl;
+	}
+
 	public String buildReponse(HttpURLConnection con) throws IOException {
+		/* Utility function: Parses the HTTP response and 
+		   builds the output string
+		*/
+
         BufferedReader in = new BufferedReader(
 			        new InputStreamReader(con.getInputStream()));
 		String inputLine;
@@ -56,6 +83,19 @@ public class Loklak {
 	}
 
 	public String search(String query, String since, String until, String fromUser, String count) throws Exception {
+		/* Handle the searching
+
+		   Args:
+		       query (String):        Search term
+		       since (String):        Only messages after the date (including the date), <date>=yyyy-MM-dd or yyyy-MM-dd_HH:mm.
+		       until (String):        Only messages before the date (excluding the date), <date>=yyyy-MM-dd or yyyy-MM-dd_HH:mm.
+		       fromUser (String):     Only messages published by the user.
+		       count (String):        The wanted number of results.
+
+		   Returns:
+		       String:  Search results from API in json format    
+		*/
+		
 		String apiUrl = "api/search.json?";
 		this.query = query;
 		this.since = since;
@@ -104,6 +144,20 @@ public class Loklak {
 
 	public String suggest(String query, String count, String order, String orderBy, String since, String until)
 	                                                    throws Exception {
+	    /* Retrieve a list of queries based on a given criteria
+
+	    Args:
+	        query (String):        To get a list of queries which match; to get all latest: leave query empty.
+	        count (String):        Number of queries
+	        order (String):        Possible values: desc, asc; default: desc.
+	        orderBy (String):      A field name of the query index schema, i.e. retrieval_next or query_count.
+	        since (String):        Left bound for a query time.
+	        until (String):           Right bound for a query time.
+
+	    Returns:
+	        String:  A list of queries in the given order in json format
+	    */
+
 		String apiUrl = "api/suggest.json?";
 
 		this.query = query;
@@ -157,7 +211,20 @@ public class Loklak {
 
  	public String aggregations(String query, String since, String until, String fields, String limit, String count)
  	                                        throws Exception {
+        /* Give the aggregations of the application.
 
+        Args:
+            query (String):    Query term.
+            since (String):    Only messages after the date (including the date), <date>=yyyy-MM-dd or yyyy-MM-dd_HH:mm.
+            until (String):    Only messages before the date (excluding the date), <date>=yyyy-MM-dd or yyyy-MM-dd_HH:mm.
+            fields (String):   Aggregation fields for search facets, like "created_at,mentions".
+            limit (String):    A limitation of number of facets for each aggregation.
+            count (String):    The wanted number of results.
+
+        Returns:
+            String: Aggregations of the application in json format
+
+        */
  		String apiUrl = "api/search.json?";
 
  		this.query = query;
@@ -207,6 +274,9 @@ public class Loklak {
  	}
 
  	public String status() throws Exception {
+        /* Retrieve a json response about the status of the server.
+        */
+
  		String apiUrl = "api/status.json";
  		
  		String url = this.baseUrl + apiUrl;
@@ -231,6 +301,9 @@ public class Loklak {
  	}
 
  	public String hello() throws Exception {
+        /* Retrieve a json response about the basic status of the server.
+        */
+
  		String apiUrl = "api/hello.json";
  		
  		String url = this.baseUrl + apiUrl;
@@ -255,6 +328,9 @@ public class Loklak {
  	}
 
  	public String peers() throws Exception {
+         /*Retrieve the peers of a user.
+         */
+
  		String apiUrl = "api/peers.json";
  		
  		String url = this.baseUrl + apiUrl;
@@ -279,6 +355,19 @@ public class Loklak {
  	}
 
  	public String user(String name, String followers, String following) throws Exception {
+ 		/*Retrieve Twitter user information.
+
+        Args:
+            name (String):         Twitter screen name of the user.
+            followers (String):    Followers of the user.
+            following (String):    Accounts the user is following.
+
+        Returns:
+            String: User information, including who they are following, and who follows them
+                    in json format.
+
+        */
+
  		String apiUrl = "api/user.json?";
 
  		this.name = name;
@@ -319,6 +408,17 @@ public class Loklak {
  	}
 
  	public String settings() throws Exception {
+ 		/*Retrieve the settings of the application.
+
+        Note:
+            The API of this function has a restrictions
+            which only localhost clients are granted.
+
+        Returns:
+            String: The settings of the application in json format
+
+        */
+
  		String apiUrl = "api/settings.json";
  		
  		String url = this.baseUrl + apiUrl;
@@ -340,5 +440,94 @@ public class Loklak {
 		}
 
 		return response;   
+ 	}
+
+ 	public String susi(String query) throws Exception {
+ 		/*Retrieve Susi query response.
+
+        Args:
+            query (String): Query term.
+
+        Returns:
+            String: Susi response in json format
+
+        */
+
+ 		this.query = query;
+ 		if (this.query != "") {
+ 			String url = this.susiUrl + "?q=" +this.query;
+ 			System.out.println(url);
+
+ 			URL urlObj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
+
+            con.setRequestMethod("GET");
+
+            con.setRequestProperty("User-Agent", USER_AGENT);
+
+            int responseCode = con.getResponseCode();
+            String response = "";
+			if (responseCode == 200) {
+                response = buildReponse(con);
+			} else {
+		        response = "{'error': 'Looks like there is a problem in susi replying.'}";
+			}
+
+			return response;
+ 		} else {
+ 			return "{'error': 'Please ask susi something.'}";
+ 		}
+ 	}
+
+ 	public String geocode(ArrayList<String> places, boolean minified) throws Exception {
+        /*Provide geocoding of place names to location coordinates.
+
+        Args:
+            minified (boolean):   Whether result should be minified or not
+            places (list):        A list of place names.
+
+        Returns:
+            String: The geocoding results based on the given place(s) name in json format
+
+        */
+
+ 		String apiUrl = "api/geocode.json?";
+
+        String minifiedString = minified == true ? "true" : "false";
+
+ 		if (places != null) {
+ 			String placeList = "";
+            for (String place:places) {
+            	placeList = placeList + "'" + place + "',";
+            }
+            placeList = "[" + placeList + "]";
+
+            String data = "{'places':" + placeList + "}";
+            apiUrl = apiUrl + "data=" + data;
+
+            apiUrl = apiUrl + "&minified=" + minifiedString;
+            
+            String url = this.baseUrl + apiUrl;
+            System.out.println(url);
+
+            URL urlObj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
+
+            con.setRequestMethod("GET");
+
+            con.setRequestProperty("User-Agent", USER_AGENT);
+
+            int responseCode = con.getResponseCode();
+            String response = "";
+			if (responseCode == 200) {
+                response = buildReponse(con);
+			} else {
+		        response = "{'error': 'Something went wrong, looks like the server is down.'}";
+			}
+
+			return response;
+ 		} else {
+ 			return "{'error': 'Please specify places.'}";
+ 		}
  	}
 }
