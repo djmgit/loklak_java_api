@@ -172,7 +172,7 @@ dates shound be in \<YYYY-MM-DD\> format
 query field is mandatory, other fields are optional, empty string can be used in their place if they are not
 required.
 
-### sug
+### suggest API
 
 This returns a list of suggestion based on the query word and queries made to the server
 
