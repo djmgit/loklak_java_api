@@ -118,7 +118,6 @@ public class Loklak {
 			}
 
             String url = this.baseUrl + apiUrl;
-            System.out.println(url);
 
             URL urlObj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
@@ -189,7 +188,6 @@ public class Loklak {
 		apiUrl = apiUrl.substring(0, apiUrl.length() - 1);
 		String url = this.baseUrl + apiUrl;
 
-		System.out.println(url);
 
 		URL urlObj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
@@ -250,7 +248,6 @@ public class Loklak {
             apiUrl = apiUrl + "&limit=" + this.limit;
 
             String url = this.baseUrl + apiUrl;
-            System.out.println(url);
 
             URL urlObj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
@@ -260,7 +257,6 @@ public class Loklak {
             con.setRequestProperty("User-Agent", USER_AGENT);
 
             int responseCode = con.getResponseCode();
-            System.out.println(responseCode);
             String response = "";
 			if (responseCode == 200) {
                 response = buildReponse(con);
@@ -281,7 +277,6 @@ public class Loklak {
  		String apiUrl = "api/status.json";
  		
  		String url = this.baseUrl + apiUrl;
-        System.out.println(url); 
 
         URL urlObj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
@@ -308,7 +303,6 @@ public class Loklak {
  		String apiUrl = "api/hello.json";
  		
  		String url = this.baseUrl + apiUrl;
-        System.out.println(url); 
 
         URL urlObj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
@@ -335,7 +329,6 @@ public class Loklak {
  		String apiUrl = "api/peers.json";
  		
  		String url = this.baseUrl + apiUrl;
-        System.out.println(url); 
 
         URL urlObj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
@@ -385,7 +378,6 @@ public class Loklak {
  			}
 
  			String url = this.baseUrl + apiUrl;
- 			System.out.println(url);
 
  			URL urlObj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
@@ -423,7 +415,6 @@ public class Loklak {
  		String apiUrl = "api/settings.json";
  		
  		String url = this.baseUrl + apiUrl;
-        System.out.println(url); 
 
         URL urlObj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
@@ -457,7 +448,6 @@ public class Loklak {
  		this.query = query;
  		if (this.query != "") {
  			String url = this.susiUrl + "?q=" +this.query;
- 			System.out.println(url);
 
  			URL urlObj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
@@ -509,7 +499,6 @@ public class Loklak {
             apiUrl = apiUrl + "&minified=" + minifiedString;
             
             String url = this.baseUrl + apiUrl;
-            System.out.println(url);
 
             URL urlObj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
