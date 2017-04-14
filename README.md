@@ -34,13 +34,13 @@ Put a copy of loklak-java-api-1.0.jar (present in target directory) in this dire
 Now compile the java file using the following:
 
 ```
-javac -cp .:loklak-java-api-1.0.jar Test.java
+javac -cp .:loklak-java-api-1.0.jar LoklakQuickStart.java
 ```
 
 Now execute the class file using the following:
 
 ```
-java -cp .:loklak-java-api-1.0.jar Test
+java -cp .:loklak-java-api-1.0.jar LoklakQuickStart
 ```
 
 ## API Usage and Documentation
@@ -112,8 +112,33 @@ Returns a String containg list of loklak peers in json format
 loklak.peers()
 ```
 
+### user API
 
+What this can do :
 
+- Fetch the details of one user
+- Fetch the details of the user along with number of their followes and following
+- Fetch only the followers / following of a particular user
+
+Method signature :
+
+```
+public String user(String name, String followers, String following) throws Exception {
+```
+
+Query Structure:
+
+```
+loklak.user(<name>, <followers>, <following>)
+```
+
+For example
+
+```
+loklak.user("fossasia", "5", "5")
+```
+
+Name field is mandatory others are optional
 
 
 
