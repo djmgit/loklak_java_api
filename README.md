@@ -14,6 +14,7 @@ Create a directory named loklak_java_example and make it the present working dir
 
 ```
 mkdir loklak_java_example
+cd loklak_java_example
 ```
 Create a file named LoklakQuickStart.java and paste the following in it :
 
@@ -41,6 +42,76 @@ Now execute the class file using the following:
 ```
 java -cp .:loklak-java-api-1.0.jar Test
 ```
+
+## API Usage and Documentation
+
+In order to use this library first it has to be included in the class path.
+For example, let us consider that the name of the file where we want to use this library is LoklakTweet.java
+
+So in order to compile the java file we need to execute the following:
+
+```
+javac -cp .:</path/to/loklak-java-api-1.0.jar> LoklakTweet.java
+```
+Then we can run the class file using the following:
+
+```
+java -cp .:</path/to/loklak-java-api-1.0.jar> LoklakTweet
+```
+
+To acces the library and its methods first we need to import it :
+
+```
+import loklak.java.api.*;
+```
+Then we need to instantiate a new Loklak object:
+
+```
+Loklak loklak = new Loklak();
+
+```
+
+This will use the default base url : http://api.loklak.org/
+
+In order to use your own loklak instance you can do the following:
+
+```
+Loklak loklak = new Loklak("<http://my_loklak_instance_name/");
+```
+
+Once the loklak object is created its various methods can be used
+
+### status API
+
+This returns a status of the server. It can be used as follows:
+
+```
+loklak.status()
+```
+### hello API
+
+Checks if server is responding properly and is online
+
+```
+loklak.hello()
+```
+
+### settings API
+
+Returns a String containing settings of the server in json format
+
+```
+loklak.settings()
+```
+
+### peers API
+
+Returns a String containg list of loklak peers in json format
+
+```
+loklak.peers()
+```
+
 
 
 
