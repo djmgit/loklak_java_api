@@ -247,10 +247,9 @@ loklak.susi("Hi")
 
 ### Parsing the response
 
-The various methods in this library returns string containing response from the Loklak API sevice in json formats.
-Java does not have any inbuild json parsing library.However there are several external java libraries to parse json.
+The various methods in this library returns string containing response from the Loklak API sevice in json format.
+Java does not have any inbuilt json parsing library.However there are several external java libraries to parse json.
 One such library is json-simple-1.1.1.jar also present in this repo.
-
 This library (and many others) can be used to parse the response returned by the library methods.
 An example of parsing the json string response is provided in Sample.java
 
