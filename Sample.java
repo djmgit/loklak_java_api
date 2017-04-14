@@ -1,5 +1,9 @@
 import loklak.java.api.*;
 import java.util.ArrayList;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.ParseException;
+import org.json.simple.parser.JSONParser;
 
 class Sample {
     public static void main(String args[]) throws Exception {
@@ -98,9 +102,26 @@ class Sample {
 
         /* Loklak aggregation API */
 
-        String aggregationsResponse = loklak.aggregations("fossasia", "2014-01-01", "now", "hashtags,mentions", "10", "0");
+        String aggregationsResponse = loklak.aggregations("fossasia", "", "", "hashtags,mentions", "10", "0");
         System.out.println(aggregationsResponse);
         System.out.println("\n \n");
+        
+        /* Parsing json data using simple json java library */
+        
+        String searchResponse = loklak.search("linux", "", "", "", "2");
+
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(searchResponse);
+        JSONObject jsonObj = (JSONObject)obj;
+        System.out.println(jsonObj);
+        System.out.println("\n \n");
+
+        JSONArray statuses = (JSONArray)jsonObj.get("statuses");
+        for(int i=0; i<2; i++) {
+            JSONObject jObj = (JSONObject)statuses.get(i);
+            String text = (String)jObj.get("text");
+            System.out.println("Tweet #" + (i + 1) + ": " + text);
+        }
 
     }
 }

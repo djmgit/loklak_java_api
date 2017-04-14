@@ -260,6 +260,7 @@ public class Loklak {
             con.setRequestProperty("User-Agent", USER_AGENT);
 
             int responseCode = con.getResponseCode();
+            System.out.println(responseCode);
             String response = "";
 			if (responseCode == 200) {
                 response = buildReponse(con);
