@@ -138,8 +138,162 @@ For example
 loklak.user("fossasia", "5", "5")
 ```
 
-Name field is mandatory others are optional
+Name field is mandatory others are optional, empty strings can be used if they are not required.
 
+### search API
 
+This is the public search API for the scrapped twitter data
 
+Method signature:
 
+```
+public String search(String query, String since, String until, String fromUser, String count) throws Exception {
+```
+
+Query structure:
+
+```
+loklak.search(<query_content>, <since_date>, <until_date>, <from_user>, <count>
+```
+
+Example with query term and count:
+
+```
+loklak.search('loklak', "", "", "", "2")
+```
+Example with since and until date:
+
+```
+loklak.search('loklak', "2015-01-01", "2017-01-01", "", "")
+```
+
+dates shound be in \<YYYY-MM-DD\> format
+
+query field is mandatory, other fields are optional, empty string can be used in their place if they are not
+required.
+
+### sug
+
+This returns a list of suggestion based on the query word and queries made to the server
+
+Method signature:
+
+```
+public String suggest(String query, String count, String order, String orderBy, String since, String until)
+	                                                    throws Exception {
+```
+
+Query Structure :
+
+```
+loklak.suggest(<query>, <count>, <order>, <orderBy>, <since>, <until>)
+```
+Example with only query:
+
+```
+loklak.suggest("fossasia", "", "", "", "", "");
+```
+
+Example with all parameters:
+
+```
+loklak.suggest("fossasia", "5", "desc", "retrieval_next", "2014-01-01", "now");
+```
+
+### aggregations API
+
+Returns Aggregation of collected data in json format
+
+Method signature:
+
+```
+public String aggregations(String query, String since, String until, String fields, String limit, String count)
+ 	                                        throws Exception {
+```
+Query structure:
+
+```
+loklak.aggregations(<query>, <since_date>, <until_date>, <fields>, <limit>, <count>);
+
+```
+
+Example query:
+
+```
+loklak.aggregations("fossasia", "", "", "hashtags,mentions", "10", "0");
+```
+
+### susi API
+
+Returns a string containig response from susi in json format
+
+Method Signature:
+
+```
+public String susi(String query) throws Exception {
+```
+
+Query structure:
+
+```
+loklak.susi(<query_term>);
+```
+
+Example:
+
+```
+loklak.susi("Hi")
+```
+
+### Parsing the response
+
+The various methods in this library returns string containing response from the Loklak API sevice in json formats.
+Java does not have any inbuild json parsing library.However there are several external java libraries to parse json.
+One such library is json-simple-1.1.1.jar also present in this repo.
+
+This library (and many others) can be used to parse the response returned by the library methods.
+An example of parsing the json string response is provided in Sample.java
+
+### Using Sample.java
+
+Sample.java contains sample usage of all the library functions. It also contains an example showing how to parse the json
+strings using json-simple-1.1.1.jar.
+
+To compile Sample.java use:
+
+```
+bash build_sample.sh
+```
+
+To run Sample.class use:
+
+```
+bash run_sample.sh
+```
+
+### Contributing
+
+Maven is used to package this project.In order to build this library, maven is required.
+In ubuntu maven can be installed by the following:
+
+```
+sudo apt-get install maven
+```
+Once maven is installed the project can be built in the following way:
+
+Go to the root of this directory and execute:
+
+```
+maven package
+```
+
+In order to see error trace use :
+
+```
+maven -X package
+```
+
+All the API method definitions are present in Loklak.java.
+New methods can be added here.
+
+The jar file is generated in the target directory.
